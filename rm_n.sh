@@ -13,6 +13,10 @@ if [ ! -d "$dir" ]; then
     exit 1
 fi
 
-find "$dir" -type f -size +"$n"c -exec rm -v {} \;
+if ! [[ "$n" =~ ^[0-9]+$ ]]; then
+    echo "error: <n> must be a non-negative integer" 1>&2
+    exit 1
+fi
 
+find "$dir" -type f -size +"${n}"c -exec rm {} \;
 exit 0
